@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>inkoop Game</title>
+</head>
+<body>
+    
+</div>
+    <div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+
+        <h2>Welcome to the Racing Game</h2>
+        <br/>
+        <p id="pumps"></p>
+        <div id="myList">
+            <div>
+                <p>Move 0 - Car at 0, Petrol remaining 30L</p>
+            </div>
+            <div id="all_list"></div>
+        </div>
+        <br>
+        <p id='alert'></p>
+        <button class="btn-primary" id="Start" onclick="start()" >Start</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var petrol ;
+    var distance;
+    var pumps=[];
+    var count;
+    function over(){
+        if (distance >= 100){
+            document.getElementById("alert").innerHTML = 'You reached 100 Congrats!';
+            return true;
+        }
+        else if(distance<100 && petrol<=0){
+            document.getElementById("alert").innerHTML = 'No fuel, Game Over!';
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    function start(){
+        document.getElementById('all_list').innerHTML='';
+        pumps=[];
+        petrol=30;
+        distance=0;
+        count=0;
+        while(pumps.length<5){
+            var random=Math.ceil(Math.random() * 80);
+            if(!pumps.includes(random))
+                pumps.push(random);
+        } 
+        pumps.sort(function(a, b){return a-b});
+        document.getElementById("pumps").innerHTML='Petrol pumps generated at '+pumps;
+        while(!over()){
+            count++;    
+            var step = Math.ceil(Math.random() * 6);
+            step=Math.min(petrol,step);
+            petrol-=step;
+            distance+=step;
+            if(pumps.includes(distance))
+                petrol+=20;
+            var node = document.createElement("div");
+            var node1=document.createElement("p");
+            node1.innerHTML='Move '+count+' - Car at '+distance+', Petrol remaining '+petrol+'L';
+            node.appendChild(node1);
+            document.getElementById("all_list").appendChild(node);
+        }
+    }
+</script>
+    
+</body>
+</html>
